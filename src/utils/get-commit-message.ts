@@ -1,7 +1,6 @@
-
 export default async (diff: string, apiKey: string): Promise<string> => {
     const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
-    const prompt = `Generate a concise, conventional commit message based on this git diff:\n\n${diff}\n\nCommit message:`;
+    const prompt = `Generate a concise, industry-standard commit message based on this git diff. Follow the Conventional Commits specification and use one of these types: feat, fix, chore, docs, refactor, test, style, perf, build, ci, revert.\n\n${diff}\n\nCommit message:`;
     const body = {
         contents: [{ parts: [{ text: prompt }] }]
     };

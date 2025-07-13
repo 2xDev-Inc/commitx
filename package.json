@@ -1,5 +1,5 @@
 {
-  "name": "commitx",
+  "name": "gitcmt",
   "module": "index.ts",
   "type": "module",
   "private": false,

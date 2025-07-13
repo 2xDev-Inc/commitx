@@ -2,7 +2,7 @@
   "name": "commitx",
   "module": "index.ts",
   "type": "module",
-  "private": true,
+  "private": false,
   "bin": {
     "commit": "dist/index.js"
   },

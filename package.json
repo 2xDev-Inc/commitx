@@ -1,12 +1,26 @@
 {
-  "name": "ai-commmit",
+  "name": "commitx",
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "bin": {
+    "commit": "dist/index.js"
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target node"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/console-clear": "^1.1.4"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "console-clear": "^1.1.1",
+    "execa": "^9.6.0",
+    "inquirer": "^12.7.0",
+    "ora": "^8.2.0"
   }
 }

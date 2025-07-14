@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "bin": {
     "gitcmt": "dist/index.js"
   },

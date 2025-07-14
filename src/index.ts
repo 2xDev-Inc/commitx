@@ -20,6 +20,20 @@ const isGitRepo = async () => {
     }
 };
 
+const getUntrackedFiles = async () => {
+    const { stdout } = await execa("git", ["status", "--porcelain"]);
+    return stdout
+        .split("\n")
+        .filter(line => line.startsWith("??"))
+        .map(line => line.slice(3).trim())
+        .filter(Boolean);
+};
+
+const addUntrackedFiles = async (files: string[]) => {
+    if (files.length === 0) return;
+    await execa("git", ["add", ...files]);
+};
+
 const main = async () => {
 
     process.on("SIGINT", () => {
@@ -44,8 +58,28 @@ const main = async () => {
             process.exit(1);
         }
 
+        // Check for untracked files
+        const untrackedFiles = await getUntrackedFiles();
+        let useCached = false;
+        if (untrackedFiles.length > 0) {
+            console.log(chalk.yellow("Untracked files detected:"));
+            untrackedFiles.forEach(f => console.log("  " + f));
+            const { addFiles } = await inquirer.prompt([
+                {
+                    type: "confirm",
+                    name: "addFiles",
+                    message: "Do you want to add all untracked files before committing?",
+                    default: true
+                }
+            ]);
+            if (addFiles) {
+                await addUntrackedFiles(untrackedFiles);
+                useCached = true;
+            }
+        }
+
         const checkCache = process.argv.includes('--cache');
-        const diff = await gitDiff(checkCache);
+        const diff = await gitDiff(useCached || checkCache);
         if (!diff) {
             console.log(chalk.yellow("No changes detected. Please make some changes before committing."));
             return;

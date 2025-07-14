@@ -3,9 +3,9 @@
   "module": "index.ts",
   "type": "module",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.3",
   "bin": {
-    "commit": "dist/index.js"
+    "gitcmt": "dist/index.js"
   },
   "scripts": {
     "build": "bun build src/index.ts --outdir dist --target node"
